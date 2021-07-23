@@ -1,0 +1,63 @@
+type StarterEntity @entity {
+  id: ID! #id is a required field
+  field1: Int!
+  field2: String #filed2 is an optional field
+  field3: BigInt
+  field4: Date
+  field5: Boolean
+}
+
+type Lab @entity {
+  id: ID!
+  account_id: String!
+  box_public_key: String
+  name: String
+  email: String
+  country: String
+  region: String
+  city: String
+  address: String
+  latitude: String
+  longitude: String
+  profile_image: String
+  services: [Service] @derivedFrom(field: "owner")
+  certifications: [Certification] @derivedFrom(field: "owner")
+}
+
+type Price @jsonField {
+  key: String
+  value: BigInt
+}
+
+type PriceByCurrency @jsonField {
+  currency: String
+  prices: [Price]
+  additional_prices: [Price]
+}
+
+type Service @entity {
+  id: ID!
+  owner_id: String!
+  owner: Lab
+  name: String
+  prices_by_currency: [PriceByCurrency]
+  category: String
+  description: String
+  long_description: String
+  image: String
+}
+
+type CertificationInfo @jsonField {
+  title: String
+  issuer: String
+  month: String
+  year: String
+  description: String
+}
+
+type Certification @entity {
+  id: ID!
+  owner_id: String!
+  owner: Lab
+  info: CertificationInfo!
+}
