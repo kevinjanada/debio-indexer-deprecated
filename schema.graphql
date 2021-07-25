@@ -61,3 +61,18 @@ type Certification @entity {
   owner: Lab
   info: CertificationInfo!
 }
+
+type Order @entity {
+  id: ID!
+  service_id: String!
+  customer_id: String!
+  customer_box_public_key: String!
+  seller_id: String!
+  dna_sample_tracking_id: String!
+  currency: String!
+  prices: [Price]!
+  additional_prices: [Price]!
+  status: String!
+  created_at: String!
+  updated_at: String!
+}

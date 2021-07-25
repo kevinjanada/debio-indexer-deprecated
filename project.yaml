@@ -260,3 +260,7 @@ dataSources:
           kind: substrate/EventHandler
           filter:
             module: services
+        - handler: handleOrderEvents
+          kind: substrate/EventHandler
+          filter:
+            module: orders
