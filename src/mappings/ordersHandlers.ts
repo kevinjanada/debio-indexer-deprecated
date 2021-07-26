@@ -38,8 +38,7 @@ export async function handleOrderEvents(event: SubstrateEvent): Promise<void> {
   }
 }
 
-async function onOrderCreated(orderData: any): Promise<void> {
-  const order = new Order(orderData['id'])
+function extractOrderData(order: Order, orderData: any): Order {
   order.service_id = orderData['service_id']
   order.customer_id = orderData['customer_id']
   order.customer_box_public_key = orderData['customer_box_public_key']
@@ -51,25 +50,42 @@ async function onOrderCreated(orderData: any): Promise<void> {
   order.status = orderData['status']
   order.created_at = orderData['created_at']
   order.updated_at = orderData['updated_at']
+  
+  return order
+}
+
+async function onOrderCreated(orderData: any): Promise<void> {
+  let order = new Order(orderData['id'])
+  order = extractOrderData(order, orderData)
   await order.save()
 }
 
 async function onOrderPaid(orderData: any): Promise<void> {
-
+  let order = await Order.get(orderData['id'])
+  order = extractOrderData(order, orderData)
+  await order.save()
 }
 
 async function onOrderSuccess(orderData: any): Promise<void> {
-
+  let order = await Order.get(orderData['id'])
+  order = extractOrderData(order, orderData)
+  await order.save()
 }
 
 async function onOrderRefunded(orderData: any): Promise<void> {
-
+  let order = await Order.get(orderData['id'])
+  order = extractOrderData(order, orderData)
+  await order.save()
 }
 
 async function onOrderCancelled(orderData: any): Promise<void> {
-
+  let order = await Order.get(orderData['id'])
+  order = extractOrderData(order, orderData)
+  await order.save()
 }
 
 async function onOrderFailed(orderData: any): Promise<void> {
-
+  let order = await Order.get(orderData['id'])
+  order = extractOrderData(order, orderData)
+  await order.save()
 }
